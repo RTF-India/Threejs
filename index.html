@@ -26,6 +26,26 @@
 
             controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+            // Add lights on all sides
+            const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+            scene.add(ambientLight);
+
+            const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight1.position.set(1, 1, 1).normalize();
+            scene.add(directionalLight1);
+
+            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight2.position.set(-1, 1, 1).normalize();
+            scene.add(directionalLight2);
+
+            const directionalLight3 = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight3.position.set(1, -1, 1).normalize();
+            scene.add(directionalLight3);
+
+            const directionalLight4 = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight4.position.set(1, 1, -1).normalize();
+            scene.add(directionalLight4);
+
             const rgbeLoader = new THREE.RGBELoader();
             rgbeLoader.load('path/to/your/texture.hdr', (texture) => {
                 texture.mapping = THREE.EquirectangularReflectionMapping;
@@ -33,7 +53,7 @@
                 scene.environment = texture;
 
                 const objLoader = new THREE.OBJLoader();
-                objLoader.load('rfc.obj', (object) => {
+                objLoader.load('circle.obj', (object) => {
                     const material = new THREE.MeshStandardMaterial({ color: 0x555555, metalness: 0.5, roughness: 0.1 });
                     object.traverse((child) => {
                         if (child.isMesh) {
